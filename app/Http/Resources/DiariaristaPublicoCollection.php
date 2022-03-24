@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+class DiariaristaPublicoCollection extends ResourceCollection
+{
+    public static $wrap = 'diaristas';
+
+    /**
+     * Guardar a quantidade de diaristas -6
+     */
+
+    private int $quantidadeDiaristas;
+
+    public function __construct($resource, int $quantidadeDiaristas)
+    {
+        parent::__construct($resource);
+        $this->quantidadeDiaristas = $quantidadeDiaristas - 6;
+    }
+
+
+    /**
+     * Define os dados retornados para cada diarista
+     *
+     * @param \Illuminate\Htpp\Request $request
+     * @return array
+     */
+
+    public function toArray($request): array
+    {
+        return [
+            'diaristas' => DiaristaPublico::collection($this->collection),
+            'quantidade_diaristas' => $this->quantidadeDiaristas > 0 ?
+                                                $this->quantidadeDiaristas : 0
+        ];
+    }
+}
