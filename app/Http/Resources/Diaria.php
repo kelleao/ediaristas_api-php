@@ -46,8 +46,6 @@ class Diaria extends JsonResource
             "quantidade_outros" => $this->quantidade_outros,
 
             "observacoes" => $this->observacoes,
-            "motivo_cancelamento" => $this->motivo_cancelamento,
-
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
 

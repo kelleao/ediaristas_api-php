@@ -4,19 +4,26 @@ namespace App\Http\Controllers\Diaria;
 
 use App\Http\Resources\Diaria;
 use App\Actions\Diaria\CriarDiaria;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiariaRequest;
+use App\Models\Diaria as ModelDiaria;
+use App\Http\Resources\DiariaCollection;
 
 class CadastroController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    * Lista as diárias do usuário logado
+    *
+    * @return DiariaCollection
+    */
+    public function index(): DiariaCollection
     {
-        //
+        $usuario = Auth::user();
+
+        $diarias = ModelDiaria::todasDoUsuario($usuario);
+        return new DiariaCollection($diarias);
     }
 
 
@@ -31,17 +38,20 @@ class CadastroController extends Controller
         $diaria = $criarDiaria->executar($request->all());
 
             return response(new Diaria($diaria), 201);
+
     }
 
     /**
-     * Display the specified resource.
+     * Mostra uma diária por ID
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ModelDiaria $diaria
+     * @return Diaria
      */
-    public function show($id)
+    public function show(ModelDiaria $diaria): Diaria
     {
-        //
+        Gate::authorize('dono-diaria', $diaria);
+        return new Diaria($diaria);
     }
+
 
     }

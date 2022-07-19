@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Usuario;
 use Illuminate\Http\Request;
 use App\Http\Resources\Usuario;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+
 
 class AutenticacaoController extends Controller
 {
@@ -60,7 +61,7 @@ class AutenticacaoController extends Controller
      */
     public function refresh(): JsonResponse
     {
-       return resposta_token(Auth::refresh());
+        return resposta_token(Auth::refresh());
     }
 
 }

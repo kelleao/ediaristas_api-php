@@ -6,14 +6,13 @@ use App\Models\Diaria;
 use App\Models\Servico;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Services\ConsultaCidade\Provedores\Ibge;
+use App\Services\ConsultaCidade\ConsultaCidadeInterface;
 
 class CriarDiaria{
 
     public function __construct(
-        private Ibge $consultaCidade
+        private ConsultaCidadeInterface $consultaCidade
     ){}
-
 
     /**
      * Cria a diária no banco de dados
@@ -33,7 +32,6 @@ class CriarDiaria{
         $dados['cliente_id'] = Auth::user()->id;
 
         return Diaria::create($dados);
-        
     }
 
     /**

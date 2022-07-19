@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -83,7 +84,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Cidade::class, 'cidade_diarista');
     }
 
-     /**
+    /**
+     * Define a relação do diarista com endereço
+     *
+     * @return HasOne
+     */
+    public function enderecoDiarista(): HasOne
+    {
+        return $this->hasOne(Endereco::class, 'user_id');
+    }
+
+    /**
      * Escopo que filtra os(as) diaristas
      *
      * @param Builder $query
@@ -120,7 +131,7 @@ class User extends Authenticatable implements JWTSubject
         return User::diaristasAtendeCidade($codigoIbge)->limit(6)->get();
     }
 
-     /**
+    /**
      * Returna a quantidade de diaristas por código do ibge
      *
      * @param integer $codigoIbge
@@ -129,5 +140,16 @@ class User extends Authenticatable implements JWTSubject
     static public function diaristasDisponivelCidadeTotal(int $codigoIbge): int
     {
         return User::diaristasAtendeCidade($codigoIbge)->count();
+    }
+
+    /**
+     * Retorna as cidades atentidas pelo(a) diarista
+     *
+     * @return array
+     */
+    public function cidadesAtendidasDiarista(): array
+    {
+        return $this->cidadesAtendidas()->get()->pluck('codigo_ibge')->toArray();
+
     }
 }

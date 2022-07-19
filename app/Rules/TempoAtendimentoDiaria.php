@@ -29,9 +29,11 @@ class TempoAtendimentoDiaria implements Rule
     {
         $servico = Servico::find($this->request->servico);
 
-        if(! $servico){
-             return false;
+        if (! $servico) {
+            return false;
         }
+
+
 
         $total = 0;
         $total += $this->request->quantidade_salas * $servico->horas_sala;
@@ -42,6 +44,7 @@ class TempoAtendimentoDiaria implements Rule
         $total += $this->request->quantidade_outros * $servico->horas_outros;
 
         return $total === $value;
+
 
     }
 

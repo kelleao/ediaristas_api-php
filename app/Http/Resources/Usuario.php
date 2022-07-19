@@ -12,10 +12,8 @@ class Usuario extends JsonResource
         $resource,
         private string $token = ''
 
-
     ){
         parent::__construct($resource);
-
     }
 
     /**

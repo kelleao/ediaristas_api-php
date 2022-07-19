@@ -37,6 +37,7 @@ class DiariaRequest extends FormRequest
                 new HoraInicioDiaria,
                 new PrazoInicioDiaria
             ],
+
             "tempo_atendimento" => [
                 'required',
                 'int',
@@ -44,9 +45,9 @@ class DiariaRequest extends FormRequest
                 new HoraFinalDiaria($this),
                 new TempoAtendimentoDiaria($this)
             ],
+
             "preco" => [
-                'required',
-                new PrecoDiaria($this)
+                'required', new PrecoDiaria($this)
             ],
 
             "logradouro" => ['required'],
@@ -60,7 +61,7 @@ class DiariaRequest extends FormRequest
                 'int',
                 new IbgeDiaristasDisponiveis
             ],
-             "cep" => ['required'],
+            "cep" => ['required'],
 
             "quantidade_quartos" => [
                 'required',
